@@ -1,0 +1,27 @@
+version: '0.0.1'
+
+services:  
+  eshop_gunicorn:
+    volumes: 
+      - static:/code/static
+      - media:/code/media
+    # image: mandharet/eshop-django:0.1
+    build: 
+      context: .
+    ports: 
+      - "8080:8080"
+
+  nginx:
+    volumes: 
+      - static:/code/static
+      - media:/code/media
+    # image: mandharet/eshop-nginx:0.1
+    build: ./nginx
+    ports:
+      - "88:88"
+    depends_on:
+      - eshop_gunicorn
+
+volumes:
+  static:
+  media:
