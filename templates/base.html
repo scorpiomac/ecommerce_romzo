@@ -62,7 +62,7 @@ input[type=number] {
           <form class="input-group d-none d-lg-flex flex-nowrap mx-4" method="POST" action="{% url 'apps.main:search_product' %}">
           {% csrf_token %}
           <div class="input-group d-none d-lg-flex mx-4">
-            <input class="form-control rounded-end pe-5" type="text" name = "keyword" placeholder="Search for products" required>
+            <input class="form-control rounded-end pe-5" type="text" name = "keyword" placeholder="Rechercher un produit" required>
             
             <button type="submit" class="btn btn-outline-dark btn-icon">
             <i class="ci-search"></i>
@@ -83,14 +83,16 @@ input[type=number] {
               {% else %} {% endcomment %}
                 <div class="navbar-tool-icon-box"><a href="{% url 'apps.accounts:profile'%}"><i class="navbar-tool-icon ci-user"></i></div>
               {% endif %}
-            <div class="navbar-tool-text ms-n3"><small>Hello!!</small>{{user.first_name}}</div>
+            <div class="navbar-tool-text ms-n3"><small>Bonjour!!</small>{{user.first_name}}</div>
             <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="{% url 'apps.accounts:signout' %}" data-bs-toggle="modal">
-              <button type="button" class="btn btn-sm btn-outline-primary ms-4">Logout</button>
+              <div class="navbar-tool-icon-box"><a href="{% url 'apps.accounts:profile'%}"><i class="navbar-tool-icon ci-user"></i></div>
+
+              <button type="button" class="btn btn-sm btn-outline-primary ms-4">Déconnexion</button>
             </a>
             {% else %}
             <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="{% url 'apps.accounts:signin' %}" data-bs-toggle="modal">
               <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
-              <div class="navbar-tool-text ms-n3"><small>Hello, Sign in</small></div>
+              <div class="navbar-tool-text ms-n3"><small>Bonjour, Connexion</small></div>
             </a>
             {% endif %}
             {% if request.user.is_staff %}
@@ -99,7 +101,7 @@ input[type=number] {
             <div class="navbar-tool ms-3">
             <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="{% url 'apps.cart:mycart' %}">
             <i class="navbar-tool-icon ci-cart"></i></a>
-            <a class="navbar-tool-text fw-bolder ms-n2" href="{% url 'apps.cart:mycart' %}"><small>My Cart</small></a>
+            <a class="navbar-tool-text fw-bolder ms-n2" href="{% url 'apps.cart:mycart' %}"><small>Panier</small></a>
             {% endif %}
                   </div>
                   
@@ -117,7 +119,7 @@ input[type=number] {
             <form class="input-group d-lg-none d-flex flex-nowrap my-3" method="POST" action="{% url 'apps.main:search_product' %}">
           {% csrf_token %}
           <div class="input-group d-lg-none d-lg-flex">
-            <input class="form-control rounded-end pe-5" type="text" name = "keyword" placeholder="Search for products" required>
+            <input class="form-control rounded-end pe-5" type="text" name = "keyword" placeholder="Rechercher un produit" required>
             
             <button type="submit" class="btn btn-outline-dark btn-icon">
             <i class="ci-search"></i>
@@ -127,15 +129,17 @@ input[type=number] {
            
             <!-- Primary menu-->
             <ul class="navbar-nav">
-              <li class="nav-item dropdown {{Home}}"><a class="nav-link" href="{% url 'apps.main:index' %}">Home</a>
+              <li class="nav-item dropdown {{Home}}"><a class="nav-link" href="{% url 'apps.main:index' %}">Accueil</a>
                 
               </li>
-              <li class="nav-item dropdown {{Shop}}"><a class="nav-link" href="{% url 'apps.main:showallproducts' %}">Shop</a>
+              <li class="nav-item dropdown {{Shop}}"><a class="nav-link" href="{% url 'apps.main:showallproducts' %}">Boutique</a>
                 
               </li>
-              <li class="nav-item dropdown {{Accounts}}"><a class="nav-link dropdown-toggle" href="#"
-                  data-bs-toggle="dropdown">Account</a>
+              <li class="nav-item dropdown {{Accounts}}"><a class="nav-link dropdown-toggle" href="{% url 'apps.accounts:profile'%}"
+                  data-bs-toggle="dropdown">Compte</a>
                 <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'apps.accounts:profile'%}">Mon compte</a></li>
+
                 {% comment %} {% if user.is_staff %}
                                      
                       <li><a class="dropdown-item" href="{% url 'apps.seller_accounts:profile' %}">Settings</a></li>
@@ -144,7 +148,7 @@ input[type=number] {
                       <li><a class="dropdown-item" href="{% url 'apps.seller_accounts:add_new_product' %}">Add New Product</a></li>                 {% else %}
                                       <li><a class="dropdown-item" href="{% url 'apps.accounts:orders' %}">Orders History</a></li>
                       <li><a class="dropdown-item" href="{% url 'apps.accounts:profile' %}">Profile Settings</a></li>
-                      <li><a class="dropdown-item" href="{% url 'apps.accounts:address' %}">Account Address</a></li>
+                      <li><a class="dropdown-item" href="{% url 'apps.accounts:address' %}">Compte Address</a></li>
                                    
                   {% endif %} {% endcomment %}
                   {% if user.is_authenticated %}
@@ -155,7 +159,7 @@ input[type=number] {
                   
                 </ul>
               </li>
-              <li class="nav-item dropdown {{Contact}}"><a class="nav-link" href="{% url 'apps.main:contact' %}">Contact Us</a></li>
+              <li class="nav-item dropdown {{Contact}}"><a class="nav-link" href="{% url 'apps.main:contact' %}">Contactez-Nous</a></li>
               
             </ul>
             
@@ -188,18 +192,18 @@ input[type=number] {
             </div>
             <div class="widget widget-links widget-light">
               <ul class="widget-list d-flex flex-wrap justify-content-center justify-content-md-start">
-                <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Outlets</a></li>
-                <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Careers</a></li>
+                <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Magasin</a></li>
+                <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Emplois</a></li>
                 <li class="widget-list-item me-4"><a class="widget-list-link" href="{% url 'apps.main:contact' %}">Contact</a></li>
-                <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Privacy</a></li>
-                <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Terms of use</a></li>
+                <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Confidentialité</a></li>
+                <li class="widget-list-item me-4"><a class="widget-list-link" href="#">Conditions d'utilisations</a></li>
               </ul>
             </div>
           </div>
           
         </div>
-        <div class="pb-4 fs-xs text-light opacity-50 text-center text-md-start">© All rights reserved. Made by <a
-            class="text-light" href="https://github.com/TwoPointerr" target="_blank" rel="noopener">TwoPointerr</a></div>
+        <div class="pb-4 fs-xs text-light opacity-50 text-center text-md-start">© Tous droits réservés. Réalisé par <a
+            class="text-light" href="https://github.com/TwoPointerr" target="_blank" rel="noopener">Romzo</a></div>
       </div>
     </div>
   </footer>
