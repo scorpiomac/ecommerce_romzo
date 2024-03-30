@@ -15,6 +15,20 @@ import urllib.request
 #     def __str__(self):
 #         return self.title
 
+
+class Category(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True, null=True)
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='children', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('name', 'parent',)
+        verbose_name_plural = "categories"
+
+    def __str__(self):
+        return self.name
+    
+
 class Product(models.Model):
     title = models.CharField(max_length=200)
     gender_cat = models.CharField(max_length=50,null=True)
@@ -23,7 +37,8 @@ class Product(models.Model):
     market_price = models.PositiveIntegerField()
     discount_price = models.PositiveIntegerField(default=0)
     description = models.TextField()
-    #seller = models.ForeignKey(CompanyDetails, on_delete=models.SET_NULL,null=True)
+    
+    categories = models.ManyToManyField(Category, related_name='products')
     brand = models.CharField(max_length=200,null=True)
     color = models.CharField(max_length=200,null=True)
     size = models.CharField(max_length=5,default="S")
@@ -94,5 +109,4 @@ class Order(models.Model):
 
     def __str__(self):
         return "Order: " + str(self.id)
-    
     
