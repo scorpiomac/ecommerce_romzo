@@ -63,14 +63,6 @@ class Migration(migrations.Migration):
                 ("size", models.CharField(default="S", max_length=5)),
                 ("material", models.CharField(max_length=200, null=True)),
                 ("completelook", models.TextField(null=True)),
-                (
-                    "seller",
-                    models.ForeignKey(
-                        null=True,
-                        on_delete=django.db.models.deletion.SET_NULL,
-                        to="seller_accounts.companydetails",
-                    ),
-                ),
             ],
         ),
         migrations.CreateModel(
@@ -88,13 +80,6 @@ class Migration(migrations.Migration):
                 ("rate", models.PositiveIntegerField(default=0)),
                 ("quantity", models.PositiveIntegerField(default=0)),
                 ("subtotal", models.PositiveIntegerField(default=0)),
-                (
-                    "company",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="seller_accounts.companydetails",
-                    ),
-                ),
                 (
                     "product",
                     models.ForeignKey(
