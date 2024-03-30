@@ -79,8 +79,8 @@ input[type=number] {
             
             {% if user.is_authenticated %}
               {% if user.is_staff %}
-                <div class="navbar-tool-icon-box"><a href="{% url 'apps.seller_accounts:profile'%}"><i class="navbar-tool-icon ci-user"></i></div>
-              {% else %}
+                {% comment %} <div class="navbar-tool-icon-box"><a href="{% url 'apps.seller_accounts:profile'%}"><i class="navbar-tool-icon ci-user"></i></div>
+              {% else %} {% endcomment %}
                 <div class="navbar-tool-icon-box"><a href="{% url 'apps.accounts:profile'%}"><i class="navbar-tool-icon ci-user"></i></div>
               {% endif %}
             <div class="navbar-tool-text ms-n3"><small>Hello!!</small>{{user.first_name}}</div>
@@ -136,7 +136,7 @@ input[type=number] {
               <li class="nav-item dropdown {{Accounts}}"><a class="nav-link dropdown-toggle" href="#"
                   data-bs-toggle="dropdown">Account</a>
                 <ul class="dropdown-menu">
-                {% if user.is_staff %}
+                {% comment %} {% if user.is_staff %}
                                      
                       <li><a class="dropdown-item" href="{% url 'apps.seller_accounts:profile' %}">Settings</a></li>
                       <li><a class="dropdown-item" href="{% url 'apps.seller_accounts:sellerorders' %}">Orders</a></li>
@@ -146,7 +146,7 @@ input[type=number] {
                       <li><a class="dropdown-item" href="{% url 'apps.accounts:profile' %}">Profile Settings</a></li>
                       <li><a class="dropdown-item" href="{% url 'apps.accounts:address' %}">Account Address</a></li>
                                    
-                  {% endif %}
+                  {% endif %} {% endcomment %}
                   {% if user.is_authenticated %}
                   <li><a class="dropdown-item" href="{% url 'apps.accounts:signout' %}">Sign Out</a></li>
                   {% else %}
