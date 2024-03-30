@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models.deletion import CASCADE
 from apps.accounts.models import *
 from django.contrib.auth.models import User
-from apps.seller_accounts.models import *
+#from apps.seller_accounts.models import *
 from django.core.files import File
 import os
 import urllib.request
@@ -23,7 +23,7 @@ class Product(models.Model):
     market_price = models.PositiveIntegerField()
     discount_price = models.PositiveIntegerField(default=0)
     description = models.TextField()
-    seller = models.ForeignKey(CompanyDetails, on_delete=models.SET_NULL,null=True)
+    #seller = models.ForeignKey(CompanyDetails, on_delete=models.SET_NULL,null=True)
     brand = models.CharField(max_length=200,null=True)
     color = models.CharField(max_length=200,null=True)
     size = models.CharField(max_length=5,default="S")
@@ -70,7 +70,7 @@ ORDER_STATUS = (
 )
     
 class Sales(models.Model):
-        company = models.ForeignKey(CompanyDetails, on_delete=models.CASCADE)
+        #company = models.ForeignKey(CompanyDetails, on_delete=models.CASCADE)
         product = models.ForeignKey(Product, on_delete=models.CASCADE)
         rate = models.PositiveIntegerField(default=0)
         quantity = models.PositiveIntegerField(default=0)

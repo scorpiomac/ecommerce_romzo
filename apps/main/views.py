@@ -10,7 +10,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.db.models import Count, Min, Sum, Avg, Max
 from django.db.models import Q
 from django.template.loader import render_to_string
-from apps.seller_accounts.models import *
+#from apps.seller_accounts.models import *
 from .models import *
 from apps.cart.models import *
 from apps.main.recom_ml_model import *
