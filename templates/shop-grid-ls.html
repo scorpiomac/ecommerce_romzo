@@ -81,30 +81,16 @@
                             <input class="widget-filter-search form-control rounded-end pe-5" type="text" placeholder="Search"><i class="ci-search position-absolute top-50 end-0 translate-middle-y fs-sm me-3"></i>
                         </div>
                         <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar data-simplebar-auto-hide="false">
-                            {% for category in categories %}
-                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" id="categories" data-filter="categories" value="{{category.name}}" type="checkbox" id="size-xs">
-                                    <label class="form-check-label widget-filter-item-text" for="size-xs">{{category.name}}</label>
-                                </div>
-                            </li>
-                            {% endfor %}
-                    <!-- </div>
-                    <div class="widget widget-filter mb-4 pb-4 border-bottom">
-                        <h3 class="widget-title">Sous Categorie</h3>
-                        <div class="input-group input-group-sm mb-2">
-                            <input class="widget-filter-search form-control rounded-end pe-5" type="text" placeholder="Search"><i class="ci-search position-absolute top-50 end-0 translate-middle-y fs-sm me-3"></i>
-                        </div>
-                        <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar data-simplebar-auto-hide="false">
-                            {% for category in sub_category %}
-                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" id="sub_cat" data-filter="sub_category" value="{{category.title}}" type="checkbox" id="size-xs">
-                                    <label class="form-check-label widget-filter-item-text" for="size-xs">{{category.title}}</label>
-                                </div>
-                            </li>
-                            {% endfor %}
-                    </div> -->
+                          {% for el in categories %}
+                          <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                              <div class="form-check">
+                                  <input class="form-check-input" id="category_type" data-filter="category_filter" value="{{ el.name }}" type="checkbox">
+                                  <label class="form-check-label widget-filter-item-text" for="category_type">{{ el.name }}</label>
+                              </div>
+                          </li>
+                          {% endfor %}
+                    </div>
+                    
                     <div class="widget widget-filter mb-4 pb-4 border-bottom">
                         <h3 class="widget-title">Type d'article</h3>
                         <div class="input-group input-group-sm mb-2">
@@ -114,8 +100,8 @@
                             {% for category in article_type %}
                             <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
                                 <div class="form-check">
-                                    <input class="form-check-input" id="article_type" data-filter="article_category" value="{{category.title}}" type="checkbox" id="size-xs">
-                                    <label class="form-check-label widget-filter-item-text" for="size-xs">{{category.title}}</label>
+                                    <input class="form-check-input" id="article_type" data-filter="article_category" value="{{category.title}}" type="checkbox" >
+                                    <label class="form-check-label widget-filter-item-text" for="article_type">{{category.title}}</label>
                                 </div>
                             </li>
                             {% endfor %} 
@@ -130,8 +116,8 @@
                             {% for category in brands %}
                             <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
                                 <div class="form-check">
-                                    <input class="form-check-input" id="brand_cat" data-filter="brand_category" value="{{category.title}}" type="checkbox" id="size-xs">
-                                    <label class="form-check-label widget-filter-item-text" for="size-xs">{{category.title}}</label>
+                                    <input class="form-check-input" id="brand_cat" data-filter="brand_category" value="{{category.title}}" type="checkbox">
+                                    <label class="form-check-label widget-filter-item-text" for="brand_cat">{{category.title}}</label>
                                 </div><span class="fs-xs text-muted">34</span>
                             </li>
                             {% endfor %}
