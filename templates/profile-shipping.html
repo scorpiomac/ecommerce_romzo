@@ -7,8 +7,8 @@
             <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
-                        <li class="breadcrumb-item"><a class="text-nowrap" href="{% url 'apps.main:index' %}"><i class="ci-home"></i>Home</a></li>
-                        <li class="breadcrumb-item text-nowrap"><a href="{% url 'apps.main:showallproducts' %}">Shop</a>
+                        <li class="breadcrumb-item"><a class="text-nowrap" href="{% url 'apps.main:index' %}"><i class="ci-home"></i>Accueil</a></li>
+                        <li class="breadcrumb-item text-nowrap"><a href="{% url 'apps.main:showallproducts' %}">Boutique</a>
                         </li>
                         <li class="breadcrumb-item text-nowrap active" aria-current="page">Checkout</li>
                     </ol>
@@ -26,15 +26,15 @@
                 <div class="steps steps-light pt-2 pb-3 mb-5">
                     <a class="step-item active" href="shop-cart.html">
                         <div class="step-progress"><span class="step-count">1</span></div>
-                        <div class="step-label"><i class="ci-cart"></i>Sign Up</div>
+                        <div class="step-label"><i class="ci-cart"></i>S'inscrire</div>
                     </a>
                     <a class="step-item active" href="checkout-details.html">
                         <div class="step-progress"><span class="step-count">2</span></div>
-                        <div class="step-label"><i class="ci-user-circle"></i>Details</div>
+                        <div class="step-label"><i class="ci-user-circle"></i>Détails</div>
                     </a>
                     <a class="step-item active current" href="checkout-shipping.html">
                         <div class="step-progress"><span class="step-count">3</span></div>
-                        <div class="step-label"><i class="ci-package"></i>Shipping Info</div>
+                        <div class="step-label"><i class="ci-package"></i>Informations d'expédition</div>
                     </a>
 
                 </div>
@@ -43,11 +43,11 @@
                 <!-- Shipping address-->
                 <div class="row gx-4 gy-3">
                     <div class="col-sm-6">
-                        <label class="form-label" for="account-fn">First Name</label>
+                        <label class="form-label" for="account-fn">Prénom</label>
                         <input class="form-control" type="text" id="account-fn" name="firstname" value="{{user.first_name}}" disabled>
                     </div>
                     <div class="col-sm-6">
-                        <label class="form-label" for="account-ln">Last Name</label>
+                        <label class="form-label" for="account-ln">Nom de famille</label>
                         <input class="form-control" type="text" id="account-ln" name="lastname" value="{{user.last_name}}" disabled>
                     </div>
                 </div>
@@ -57,13 +57,13 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="mb-3">
-                                <label class="form-label" for="checkout-address-1">Address</label>
+                                <label class="form-label" for="checkout-address-1">Adresse</label>
                                 <input class="form-control" type="text" name="addline" value="{{address.addline}}" id="checkout-address-1">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="mb-3">
-                                <label class="form-label" for="checkout-zip">City</label>
+                                <label class="form-label" for="checkout-zip">Ville</label>
                                 <input class="form-control" type="text" name="city" value="{{address.city}}" id="checkout-zip">
                             </div>
                         </div>
@@ -71,13 +71,13 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="mb-3">
-                                <label class="form-label" for="checkout-address-1">State</label>
+                                <label class="form-label" for="checkout-address-1">État</label>
                                 <input class="form-control" type="text" name="state" value="{{address.state}}" id="checkout-address-1">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="mb-3">
-                                <label class="form-label" for="checkout-zip">ZIP Code</label>
+                                <label class="form-label" for="checkout-zip">Code postal</label>
                                 <input class="form-control" type="text" name="zipcode" value="{{address.pincode}}" id="checkout-zip">
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                         <hr class="mt-2 mb-3">
                         <div class="d-flex flex-wrap justify-content-between align-items-center">
 
-                            <button class="btn btn-primary mt-3 mt-sm-0" type="Submiit">Submit</button>
+                            <button class="btn btn-primary mt-3 mt-sm-0" type="Submiit">Soumettre</button>
                         </div>
                     </div>
         </div>

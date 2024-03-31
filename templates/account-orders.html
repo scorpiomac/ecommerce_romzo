@@ -7,15 +7,15 @@
         <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
-              <li class="breadcrumb-item"><a class="text-nowrap" href="{% url 'apps.main:index' %}"><i class="ci-home"></i>Home</a></li>
-              <li class="breadcrumb-item text-nowrap"><a href="#">Account</a>
+              <li class="breadcrumb-item"><a class="text-nowrap" href="{% url 'apps.main:index' %}"><i class="ci-home"></i>Accueil</a></li>
+              <li class="breadcrumb-item text-nowrap"><a href="#">Compte</a>
               </li>
-              <li class="breadcrumb-item text-nowrap active" aria-current="page">Orders history</li>
+              <li class="breadcrumb-item text-nowrap active" aria-current="page">Historique des commandes</li>
             </ol>
           </nav>
         </div>
         <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
-          <h1 class="h3 text-light mb-0">My orders</h1>
+          <h1 class="h3 text-light mb-0">Mes commandes</h1>
         </div>
       </div>
     </div>
@@ -32,18 +32,18 @@
                           </div>
                       </div>
 
-                      <a class="btn btn-primary d-lg-none mb-2 mt-3 mt-md-0" href="#account-menu" data-bs-toggle="collapse" aria-expanded="false"><i class="ci-menu me-2"></i>Account menu</a>
+                      <a class="btn btn-primary d-lg-none mb-2 mt-3 mt-md-0" href="#account-menu" data-bs-toggle="collapse" aria-expanded="false"><i class="ci-menu me-2"></i>Menu du compte</a>
                   </div>
                   <div class="d-lg-block collapse" id="account-menu">
 
                       <div class="bg-secondary px-4 py-3">
-                          <h3 class="fs-sm mb-0 text-muted">Account settings</h3>
+                          <h3 class="fs-sm mb-0 text-muted">Paramètres du compte</h3>
                       </div>
                       <ul class="list-unstyled mb-0">
-                          <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.accounts:profile' %}"><i class="ci-user opacity-60 me-2"></i>Profile info</a></li>
-                          <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.accounts:address' %}"><i class="ci-location opacity-60 me-2"></i>Address</a></li>
-                          <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 active" href="{% url 'apps.accounts:orders' %}"><i class="ci-bag opacity-60 me-2"></i>Orders</a></li>
-                          <li class="d-lg-none border-top mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.accounts:signout' %}"><i class="ci-sign-out opacity-60 me-2"></i>Sign out</a></li>
+                          <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.accounts:profile' %}"><i class="ci-user opacity-60 me-2"></i>Informations sur le profil</a></li>
+                          <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.accounts:address' %}"><i class="ci-location opacity-60 me-2"></i>Adresse</a></li>
+                          <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3 active" href="{% url 'apps.accounts:orders' %}"><i class="ci-bag opacity-60 me-2"></i>Commandes</a></li>
+                          <li class="d-lg-none border-top mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'apps.accounts:signout' %}"><i class="ci-sign-out opacity-60 me-2"></i>S'inscrire</a></li>
                       </ul>
                   </div>
               </div>
@@ -55,16 +55,16 @@
             <div class="d-flex align-items-center">
              
             </div>
-            <a class="btn btn-primary btn-sm d-none d-lg-inline-block" href="account-signin.html"><i class="ci-sign-out me-2"></i>Sign out</a>
+            <a class="btn btn-primary btn-sm d-none d-lg-inline-block" href="account-signin.html"><i class="ci-sign-out me-2"></i>S'inscrire</a>
           </div>
           <!-- Orders list-->
           <div class="table-responsive fs-md mb-4">
             <table class="table table-hover mb-0">
               <thead>
                 <tr>
-                  <th>Order #</th>
-                  <th>Date Purchased</th>
-                  <th>Status</th>
+                  <th>Commande #</th>
+                  <th>Date d'achat</th>
+                  <th>Statut</th>
                   <th>Total</th>
                 </tr>
               </thead>
