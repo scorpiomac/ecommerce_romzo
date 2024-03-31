@@ -31,7 +31,7 @@ class Product(models.Model):
     title = models.CharField(max_length=200)
     gender_cat = models.CharField(max_length=50,null=True)
     sub_cat = models.CharField(max_length=50,null=True)
-    articel_type = models.CharField(max_length=50,null=True)
+    article_type = models.CharField(max_length=50,null=True)
     market_price = models.PositiveIntegerField()
     discount_price = models.PositiveIntegerField(default=0)
     description = models.TextField()
@@ -54,6 +54,12 @@ class ProductImagesURL(models.Model):
     product = models.ForeignKey(Product,on_delete=CASCADE)
     image_url = models.URLField(max_length=500,blank=True)
     
+class ProductRecommendation(models.Model):
+    product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name='recommendation')
+    recommended_products = models.ManyToManyField(Product, related_name='recommended_by', blank=True)
+
+    def __str__(self):
+        return f"Recommandations pour {self.product.name}"
 
 class Cart (models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
