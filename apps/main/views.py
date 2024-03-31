@@ -93,8 +93,8 @@ def Search_Product(request):
 def Single_Product(request, pid):
    single_product = Product.objects.get(id = pid)
    reviews = Reviews.objects.filter(product_id = pid).order_by('-created_at') 
-   similar_products_set = similar_products(pid,15)
-   return render(request, 'shop-single-v2.html', {'single_product':single_product,'similar_products':similar_products_set,'reviews':reviews}) 
+   #similar_products_set = similar_products(pid,15)
+   return render(request, 'shop-single-v2.html', {'single_product':single_product,'reviews':reviews}) 
 
 #To Filter Data
 
