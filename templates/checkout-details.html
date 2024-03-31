@@ -5,16 +5,16 @@
         <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
-                    <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>Home</a>
+                    <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>Accueil</a>
                     </li>
-                    <li class="breadcrumb-item text-nowrap"><a href="{% url 'apps.main:showallproducts' %}">Shop</a>
+                    <li class="breadcrumb-item text-nowrap"><a href="{% url 'apps.main:showallproducts' %}">Boutique</a>
                     </li>
-                    <li class="breadcrumb-item text-nowrap active" aria-current="page">Checkout</li>
+                    <li class="breadcrumb-item text-nowrap active" aria-current="page">Payer</li>
                 </ol>
             </nav>
         </div>
         <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
-            <h1 class="h3 text-light mb-0">Checkout</h1>
+            <h1 class="h3 text-light mb-0">Payer</h1>
         </div>
     </div>
 </div>
@@ -27,16 +27,16 @@
             <div class="steps steps-light pt-2 pb-3 mb-5">
                 <a class="step-item active" href="{% url 'apps.cart:mycart' %}">
                     <div class="step-progress"><span class="step-count">1</span></div>
-                    <div class="step-label"><i class="ci-cart"></i>Cart</div>
+                    <div class="step-label"><i class="ci-cart"></i>Panier</div>
                 </a>
                 <a class="step-item active current" href="checkout-details.html">
                     <div class="step-progress"><span class="step-count">2</span></div>
-                    <div class="step-label"><i class="ci-user-circle"></i>Details</div>
+                    <div class="step-label"><i class="ci-user-circle"></i>Détails</div>
                 </a>
 
                 <a class="step-item" href="checkout-payment.html">
                     <div class="step-progress"><span class="step-count">3</span></div>
-                    <div class="step-label"><i class="ci-card"></i>Payment</div>
+                    <div class="step-label"><i class="ci-card"></i>Paiement</div>
                 </a>
 
             </div>
@@ -48,10 +48,10 @@
                     <div class="ps-3">
                         <h3 class="fs-base mb-0">{{user.first_name}} {{user.last_name}}</h3><span class="text-accent fs-sm">{{user.email}}</span>
                     </div>
-                </div><a class="btn btn-light btn-sm btn-shadow mt-3 mt-sm-0" href="{% url 'apps.accounts:profile' %}"><i class="ci-edit me-2"></i>Edit profile</a>
+                </div><a class="btn btn-light btn-sm btn-shadow mt-3 mt-sm-0" href="{% url 'apps.accounts:profile' %}"><i class="ci-edit me-2"></i>Editer le profil</a>
             </div>
             <!-- Shipping address-->
-            <h2 class="h6 pt-1 pb-3 mb-3 ">Shipping address</h2>
+            <h2 class="h6 pt-1 pb-3 mb-3 ">Adresse de livraison</h2>
            
 
                 <div class="list-group">
@@ -62,7 +62,7 @@
                         <span Class="mx-3">{{profile.mob_no}}</span>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">{{user.email}}</li>
-                            <li class="list-group-item"><strong>Address:</strong>
+                            <li class="list-group-item"><strong>Adresse:</strong>
                                 {{address.addline}}, {{address.city}}, {{address.state}} - {{address.pincode}}
                             </li>
 
@@ -70,19 +70,19 @@
                     </label>
                     <label class="list-group-item border-top my-3">
                         <input class="form-check-input me-2" type="radio" name="address" value="new">
-                        <span class="">Enter new Address</span>
+                        <span class="">Entrez une nouvelle adresse</span>
 
 
                         <div class="row mt-3">
                             <div class="col-sm-6">
                                 <div class="mb-3">
-                                    <label class="form-label" for="account-fn">First Name</label>
+                                    <label class="form-label" for="account-fn">Prénom</label>
                     <input class="form-control" type="text" id="account-fn" name="firstname" value="">
                 </div>
     </div>
     <div class="col-sm-6">
         <div class="mb-3">
-            <label class="form-label" for="account-ln">Last Name</label>
+            <label class="form-label" for="account-ln">Nom de famille</label>
             <input class="form-control" type="text" id="account-ln" name="lastname" value="">
         </div>
     </div>
@@ -90,13 +90,13 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="mb-3">
-            <label class="form-label" for="account-email">Email Address</label>
+            <label class="form-label" for="account-email">Adresse e-mail</label>
             <input class="form-control" type="email" id="account-email" name="emailadd" value="">
         </div>
     </div>
     <div class="col-sm-6">
         <div class="mb-3">
-            <label class="form-label" for="account-phone">Phone Number</label>
+            <label class="form-label" for="account-phone">Numéro de téléphone</label>
             <input class="form-control" type="text" id="account-phone" name="phoneno" value="">
         </div>
     </div>
@@ -105,13 +105,13 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="mb-3">
-            <label class="form-label" for="checkout-address-1">Address</label>
+            <label class="form-label" for="checkout-address-1">Adresse</label>
             <input class="form-control" type="text" name="addline" value="" id="checkout-address-1">
         </div>
     </div>
     <div class="col-sm-6">
         <div class="mb-3">
-            <label class="form-label" for="checkout-zip">City</label>
+            <label class="form-label" for="checkout-zip">Ville</label>
             <input class="form-control" type="text" name="city" value="" id="checkout-zip">
         </div>
     </div>
@@ -119,13 +119,13 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="mb-3">
-            <label class="form-label" for="checkout-address-1">State</label>
+            <label class="form-label" for="checkout-address-1">État</label>
             <input class="form-control" type="text" name="state" value="" id="checkout-address-1">
         </div>
     </div>
     <div class="col-sm-6">
         <div class="mb-3">
-            <label class="form-label" for="checkout-zip">ZIP Code</label>
+            <label class="form-label" for="checkout-zip">Code postal</label>
             <input class="form-control" type="text" name="zipcode" value="" id="checkout-zip">
         </div>
     </div>
@@ -143,7 +143,7 @@
 
             <div class="py-2 px-xl-2">
                 <div class="widget mb-3">
-                    <h2 class="widget-title text-center">Order summary</h2>
+                    <h2 class="widget-title text-center">Récapitulatif de la commande</h2>
                     {% for cp in cartproducts %}
                     <div class="d-flex pb-2 border-bottom">
                         <div class="ps-2">
@@ -159,10 +159,10 @@
                     {% endfor %}
                 </div>
                 <ul class="list-unstyled fs-sm pb-2 border-bottom">
-                    <li class="d-flex justify-content-between align-items-center"><span class="me-2">Subtotal:</span><span class="text-end">${{cart.total}}</span></li>
-                    <li class="d-flex justify-content-between align-items-center"><span class="me-2">Shipping:</span><span class="text-end">—</span></li>
+                    <li class="d-flex justify-content-between align-items-center"><span class="me-2">Sous-total:</span><span class="text-end">${{cart.total}}</span></li>
+                    <li class="d-flex justify-content-between align-items-center"><span class="me-2">Livraison:</span><span class="text-end">—</span></li>
                     <li class="d-flex justify-content-between align-items-center"><span class="me-2">Taxes:</span><span class="text-end">—</span></li>
-                    <li class="d-flex justify-content-between align-items-center"><span class="me-2">Discount:</span><span class="text-end">—</span></li>
+                    <li class="d-flex justify-content-between align-items-center"><span class="me-2">Remise:</span><span class="text-end">—</span></li>
                 </ul>
 
 
@@ -173,7 +173,7 @@
             </div>
 
             <a class="btn btn-shadow d-block w-100 mt-4" href="{% url 'apps.cart:checkoutdetails' %}">
-                <button class="btn btn-primary" type="submit"><i class="ci-card fs-lg me-2"></i>Proceed to Checkout</button></a>
+                <button class="btn btn-primary" type="submit"><i class="ci-card fs-lg me-2"></i>Passer à la caisse</button></a>
         </div>
 
     </div>
@@ -185,11 +185,11 @@
     <div class="col-lg-8">
         <div class="d-flex pt-4 mt-3">
             <div class="w-50 pe-3"><a class="btn btn-secondary d-block w-100" href="shop-cart.html"><i
-                            class="ci-arrow-left mt-sm-0 me-1"></i><span class="d-none d-sm-inline">Back to
-                            Cart</span><span class="d-inline d-sm-none">Back</span></a></div>
+                            class="ci-arrow-left mt-sm-0 me-1"></i><span class="d-none d-sm-inline">Retour au
+                            Panier</span><span class="d-inline d-sm-none">Retour</span></a></div>
             <div class="w-50 ps-2"><a class="btn btn-primary d-block w-100" href="checkout-shipping.html"><span
-                            class="d-none d-sm-inline">Proceed to Shipping</span><span
-                            class="d-inline d-sm-none">Next</span><i class="ci-arrow-right mt-sm-0 ms-1"></i></a>
+                            class="d-none d-sm-inline">Procéder à l'expédition</span><span
+                            class="d-inline d-sm-none">Suivant</span><i class="ci-arrow-right mt-sm-0 ms-1"></i></a>
             </div>
         </div>
     </div>

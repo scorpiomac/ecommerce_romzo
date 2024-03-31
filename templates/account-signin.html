@@ -6,21 +6,21 @@
         <div class="col-md-6">
           <div class="card border-0 shadow">
             <div class="card-body">
-              <h2 class="h4 mb-1">Sign in</h2>
+              <h2 class="h4 mb-1">Se connecter</h2>
               <hr>
-              <h3 class="fs-base pt-4 pb-2">Don't have an account? <a href="{% url 'apps.accounts:signup' %}">SignUp</a></h3>
+              <h3 class="fs-base pt-4 pb-2">Vous n'avez pas de compte ? <a href="{% url 'apps.accounts:signup' %}">S'inscrire</a></h3>
               {% comment %} <h3 class="fs-base pt-4 pb-2">Are you a seller? <a href="{% url 'apps.seller_accounts:signin' %}">SignIn</a></h3> {% endcomment %}
               <form method="POST" class="needs-validation" onsubmit="return validName()" novalidate>
                 {% csrf_token %}
                 <div class="input-group mb-3"><i class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
-                  <input class="form-control rounded-start" type="text" name="username" placeholder="Username" required>
+                  <input class="form-control rounded-start" type="text" name="username" placeholder="Nom d'utilisateur" required>
                 </div>
                 <div>
                   <span id="message-username" style="color:red"></span>
                 </div>
                 <div class="input-group mb-3"><i class="ci-locked position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
                   <div class="password-toggle w-100">
-                    <input class="form-control unique_password" type="password" name="password" placeholder="Password" required>
+                    <input class="form-control unique_password" type="password" name="password" placeholder="Mot de passe" required>
                     <label class="password-toggle-btn" aria-label="Show/hide password">
                       <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
                     </label>
@@ -32,7 +32,7 @@
                 
                 <hr class="mt-4">
                 <div class="text-end pt-4">
-                  <button class="btn btn-primary" type="submit"><i class="ci-sign-in me-2 ms-n21"></i>Sign In</button>
+                  <button class="btn btn-primary" type="submit"><i class="ci-sign-in me-2 ms-n21"></i>Se connecter</button>
                 </div>
               </form>
             </div>

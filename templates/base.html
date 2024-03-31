@@ -5,9 +5,9 @@
 
 <head>
   <meta charset="utf-8">
-  <title>{% block title%}Cartzilla - Product Categoriztion and Recommendation{% endblock %}</title>
+  <title>{% block title%}E-shop - Product Categoriztion and Recommendation{% endblock %}</title>
   <!-- SEO Meta Tags-->
-  <meta name="description" content="Cartzilla - Product Categoriztion and Recommendation">
+  <meta name="description" content="E-shop - Product Categoriztion and Recommendation">
   <meta name="keywords"
     content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
   <meta name="author" content="DSE  Studio">
@@ -57,7 +57,7 @@ input[type=number] {
       <div class="navbar navbar-expand-lg navbar-light">
         <div class="container"><a class="navbar-brand d-none d-sm-block flex-shrink-0" href="{% url 'apps.main:index' %}"><img
               src="{% static 'img/logo-dark.png' %}" width="142" alt="eShop"></a><a
-            class="navbar-brand d-sm-none flex-shrink-0 me-2" href="home-marketplace.html"><img
+            class="navbar-brand d-sm-none flex-shrink-0 me-2" href="{% url 'apps.main:index' %}"><img
               src="{% static 'img/logo-icon.png' %}" width="74" alt="eShop"></a>
           <form class="input-group d-none d-lg-flex flex-nowrap mx-4" method="POST" action="{% url 'apps.main:search_product' %}">
           {% csrf_token %}
@@ -187,7 +187,7 @@ input[type=number] {
         <div class="row pb-2">
           <div class="col-md-6 text-center text-md-start mb-4">
             <div class="text-nowrap mb-4"><a class="d-inline-block align-middle mt-n1 me-3" href="#"><img
-                  class="d-block" src="{% static 'img/footer-logo-light.png' %}" width="117" alt="Cartzilla"></a>
+                  class="d-block" src="{% static 'img/footer-logo-light.png' %}" width="117" alt="E-shop"></a>
               
             </div>
             <div class="widget widget-links widget-light">
