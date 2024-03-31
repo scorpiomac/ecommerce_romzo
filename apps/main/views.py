@@ -41,10 +41,10 @@ def show_all_products(request):
     product_list = Product.objects.all().order_by('id')
     minprice = Product.objects.all().aggregate(Min('market_price'))['market_price__min']
     maxprice = Product.objects.all().aggregate(Max('market_price'))['market_price__max']
-
-    gender_cat = Product.objects.values_list('gender_cat',flat=True).distinct()
-    sub_cat = Product.objects.values_list('sub_cat',flat=True).distinct()
-    articel_type = Product.objects.values_list('articel_type',flat=True).distinct()
+    
+    categories = Product.objects.values_list('categories',flat=True).distinct()
+    
+    article_type = Product.objects.values_list('article_type',flat=True).distinct()
 
     color = Product.objects.values_list('color',flat=True).distinct()
     brand = Product.objects.values_list('brand',flat=True).distinct()
@@ -52,7 +52,12 @@ def show_all_products(request):
     paginator = Paginator(product_list, 15)
     page_number = request.GET.get('page')
     product_list = paginator.get_page(page_number)
-    return render(request, "shop-grid-ls.html", {'product_list': product_list,'gender_cat':list(gender_cat),'sub_category':list(sub_cat),'article_type':list(articel_type), 'minprice':minprice, 'maxprice':maxprice, 'colors':list(color),'brands':list(brand)})
+    lp = []
+    for category in categories:
+        if category is not None:
+            lp.append(Category.objects.get(id=category))
+    categories = lp
+    return render(request, "shop-grid-ls.html", {'product_list': product_list,'categories':list(categories),'article_type':list(article_type), 'minprice':minprice, 'maxprice':maxprice, 'colors':list(color),'brands':list(brand)})
 
 def category(request):
     # allcat = Category.objects.all()
@@ -65,9 +70,9 @@ def Search_Result(request, keyword):
     minprice = product_list.aggregate(Min('market_price'))['market_price__min']
     maxprice = product_list.aggregate(Max('market_price'))['market_price__max']
 
-    gender_cat = product_list.values_list('gender_cat',flat=True).distinct()
-    sub_cat = product_list.values_list('sub_cat',flat=True).distinct()
-    articel_type = product_list.values_list('articel_type',flat=True).distinct()
+    categories = product_list.values_list('categories',flat=True).distinct()
+    
+    article_type = product_list.values_list('article_type',flat=True).distinct()
 
     color = product_list.values_list('color',flat=True).distinct()
     brand = product_list.values_list('brand',flat=True).distinct()
@@ -76,7 +81,7 @@ def Search_Result(request, keyword):
     page_number = request.GET.get('page')
     product_list = paginator.get_page(page_number)
 
-    return render(request, 'search_result.html', {'keyword':keyword, 'search_result': product_list,'gender_cat':list(gender_cat),'sub_category':list(sub_cat),'article_type':list(articel_type), 'minprice':minprice, 'maxprice':maxprice, 'colors':list(color),'brands':list(brand)})
+    return render(request, 'search_result.html', {'keyword':keyword, 'search_result': product_list,'categories':list(categories),'article_type':list(article_type), 'minprice':minprice, 'maxprice':maxprice, 'colors':list(color),'brands':list(brand)})
 
 def Search_Product(request):
     product_list = Product.objects.all()
@@ -105,8 +110,7 @@ def filter_search_data(request):
     return JsonResponse({'data_search':template})
 
 def filter_data_functionality(request,product_list):
-    gender_categories= request.GET.getlist('gender_category[]')
-    sub_categories= request.GET.getlist('sub_category[]')
+    categories= request.GET.getlist('categories[]')
     article_categories= request.GET.getlist('article_category[]')
     sort_by_categories= request.GET.getlist('sort_by[]')
     color_filter= request.GET.getlist('color_filters[]')
@@ -118,13 +122,11 @@ def filter_data_functionality(request,product_list):
     product_list = product_list.filter(market_price__gte=min_price).order_by('market_price')
     product_list = product_list.filter(market_price__lte=max_price).order_by('market_price')
     # product_sort_list = product_sort_list.all().order_by('title')
-    if len(gender_categories)>0:
+    if len(categories)>0:
         # category = Category.objects.filter(title__in=categories)
-        product_list = product_list.filter(gender_cat__in=gender_categories)
-    if len(sub_categories)>0:
-        product_list = product_list.filter(sub_cat__in=sub_categories)
+        product_list = product_list.filter(categories__in=categories)
     if len(article_categories)>0:
-        product_list = product_list.filter(articel_type__in=article_categories)
+        product_list = product_list.filter(article_type__in=article_categories)
     if len(sort_by_categories)>0:
         if(sort_by_categories[0] == 'l_h_sort_by'):
             product_list = product_list.all().order_by('market_price')
@@ -155,36 +157,34 @@ def filter_auto(request):
         products=''
     
     productlist = list(products.split("-"))
-    gender_categories= productlist[1:2]
-    sub_categories= productlist[2:3]
+    categories= productlist[1:2]
     article_categories= productlist[3:4]
    
     
 
     product_list = Product.objects.all().order_by('id')
     
-    if len(gender_categories)>0:
+    if len(categories)>0:
         # category = Category.objects.filter(title__in=categories)
-        product_list = product_list.filter(gender_cat__in=gender_categories)
-    if len(sub_categories)>0:
-        product_list = product_list.filter(sub_cat__in=sub_categories)
+        product_list = product_list.filter(categories__in=categories)
+    
     if len(article_categories)>0:
-        product_list = product_list.filter(articel_type__in=article_categories)
+        product_list = product_list.filter(article_type__in=article_categories)
     
     set_page_active('Shop')
     minprice = Product.objects.all().aggregate(Min('market_price'))['market_price__min']
     maxprice = Product.objects.all().aggregate(Max('market_price'))['market_price__max']
     subCategory_list = ['Topwear', 'Bottomwear', 'Dress', 'Saree', 'Shoes', 'Innerwear', 'Headwear', 'Socks', 'Flip Flops']
-    all_articel_type_list = ['Belts', 'Blazers', 'Booties', 'Boxers', 'Bra', 'Briefs', 'Camisoles', 'Capris', 'Caps', 'Casual Shoes', 'Churidar', 'Dresses', 'Dupatta', 'Flats', 'Flip Flops', 'Formal Shoes', 'Hat', 'Headband', 'Heels', 'Innerwear Vests', 'Jackets', 'Jeans', 'Jeggings', 'Jumpsuit', 'Kurtas', 'Kurtis', 'Leggings', 'Lehenga Choli', 'Nehru Jackets', 'Patiala', 'Rain Jacket', 'Rain Trousers', 'Rompers', 'Salwar', 'Salwar and Dupatta', 'Sandals', 'Sarees', 'Shapewear', 'Shirts', 'Shorts', 'Shrug', 'Skirts', 'Socks', 'Sports Shoes', 'Stockings', 'Suits', 'Suspenders', 'Sweaters', 'Sweatshirts', 'Swimwear', 'Tights', 'Tops', 'Track Pants', 'Tracksuits', 'Trousers', 'Trunk', 'Tshirts', 'Tunics', 'Waistcoat']
+    all_article_type_list = ['Belts', 'Blazers', 'Booties', 'Boxers', 'Bra', 'Briefs', 'Camisoles', 'Capris', 'Caps', 'Casual Shoes', 'Churidar', 'Dresses', 'Dupatta', 'Flats', 'Flip Flops', 'Formal Shoes', 'Hat', 'Headband', 'Heels', 'Innerwear Vests', 'Jackets', 'Jeans', 'Jeggings', 'Jumpsuit', 'Kurtas', 'Kurtis', 'Leggings', 'Lehenga Choli', 'Nehru Jackets', 'Patiala', 'Rain Jacket', 'Rain Trousers', 'Rompers', 'Salwar', 'Salwar and Dupatta', 'Sandals', 'Sarees', 'Shapewear', 'Shirts', 'Shorts', 'Shrug', 'Skirts', 'Socks', 'Sports Shoes', 'Stockings', 'Suits', 'Suspenders', 'Sweaters', 'Sweatshirts', 'Swimwear', 'Tights', 'Tops', 'Track Pants', 'Tracksuits', 'Trousers', 'Trunk', 'Tshirts', 'Tunics', 'Waistcoat']
     # all_category = Category.objects.all()
-    gender_cat = Product.objects.values_list('gender_cat',flat=True).distinct()
+    categories = Product.objects.values_list('categories',flat=True).distinct()
     sub_cat = Product.objects.values_list('sub_cat',flat=True).distinct()
-    articel_type = Product.objects.values_list('articel_type',flat=True).distinct()
+    article_type = Product.objects.values_list('article_type',flat=True).distinct()
     color = Product.objects.values_list('color',flat=True).distinct()
     paginator = Paginator(product_list, 6)
     page_number = request.GET.get('page')
     product_list = paginator.get_page(page_number)
-    return render(request, "shop-grid-ls.html", {'product_list': product_list,'gender_cat':list(gender_cat),'sub_category':list(sub_cat),'article_type':list(articel_type), 'minprice':minprice, 'maxprice':maxprice, 'colors':list(color)})
+    return render(request, "shop-grid-ls.html", {'product_list': product_list,'categories':list(categories),'sub_category':list(sub_cat),'article_type':list(article_type), 'minprice':minprice, 'maxprice':maxprice, 'colors':list(color)})
     
 
 
