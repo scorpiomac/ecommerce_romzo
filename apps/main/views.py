@@ -71,7 +71,6 @@ def Search_Result(request, keyword):
     maxprice = product_list.aggregate(Max('market_price'))['market_price__max']
 
     categories = product_list.values_list('categories',flat=True).distinct()
-    
     article_type = product_list.values_list('article_type',flat=True).distinct()
 
     color = product_list.values_list('color',flat=True).distinct()
@@ -93,8 +92,18 @@ def Search_Product(request):
 def Single_Product(request, pid):
    single_product = Product.objects.get(id = pid)
    reviews = Reviews.objects.filter(product_id = pid).order_by('-created_at') 
+<<<<<<< HEAD
    #similar_products_set = similar_products(pid,15)
    return render(request, 'shop-single-v2.html', {'single_product':single_product,'reviews':reviews}) 
+=======
+   try:
+        recommendation = ProductRecommendation.objects.get(product=single_product)
+        similar_products = recommendation.recommended_products.all()
+   except ProductRecommendation.DoesNotExist:
+        # Si aucune recommandation n'existe pour le produit, renvoyer un ensemble vide
+        similar_products = Product.objects.none()
+   return render(request, 'shop-single-v2.html', {'single_product':single_product,'similar_products':similar_products,'reviews':reviews}) 
+>>>>>>> refs/remotes/origin/main
 
 #To Filter Data
 
@@ -110,13 +119,22 @@ def filter_search_data(request):
     return JsonResponse({'data_search':template})
 
 def filter_data_functionality(request,product_list):
-    categories= request.GET.getlist('categories[]')
+    categories= request.GET.getlist('category_filter[]')
     article_categories= request.GET.getlist('article_category[]')
     sort_by_categories= request.GET.getlist('sort_by[]')
     color_filter= request.GET.getlist('color_filters[]')
     product_brands = request.GET.getlist('brand_category[]')
     print("product_brabd",product_brands)
     
+    print("cats",categories)
+    lp = []
+    for category in categories:
+        cat = Category.objects.get(name=category)
+        lp.append(cat.id)
+    categories = lp
+
+    print(categories)
+
     min_price = request.GET.get('minPrice')
     max_price = request.GET.get('maxPrice')
     product_list = product_list.filter(market_price__gte=min_price).order_by('market_price')
@@ -159,6 +177,7 @@ def filter_auto(request):
     productlist = list(products.split("-"))
     categories= productlist[1:2]
     article_categories= productlist[3:4]
+    print('e', categories)
    
     
 
