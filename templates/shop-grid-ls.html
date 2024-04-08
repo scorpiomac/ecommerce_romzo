@@ -173,11 +173,11 @@
                     
                     {% if user.is_staff %}
                     <button class="btn btn-primary btn-sm d-block w-100 mb-2 disabled" type="button"><i class="ci-cart fs-sm me-1"></i>Ajouter au panier</button>
-                    {% else %}
-                    <a href="{% url 'apps.cart:addtocart' product.id %}">
-                    <button class="btn btn-primary btn-sm d-block w-100 mb-2" type="button"><i class="ci-cart fs-sm me-1"></i>Ajouter au panier</button>
-                    </a>
-                    {% endif %}
+                {% else %}
+                    <button id="add-to-cart-btn" class="btn btn-primary btn-sm d-block w-100 mb-2" type="button" onclick="addToCart({{ product.id }}, 1)">
+                        <i class="ci-cart fs-sm me-1"></i>Ajouter au panier
+                    </button>
+                {% endif %}
                     
                   </div>
                 </div>
@@ -235,5 +235,6 @@
         </section>
       </div>
     </div>
+    
     <!-- Footer-->
     {% endblock %}

@@ -15,7 +15,7 @@ urlpatterns = [
     path('address/',views.address, name="address"),
     path('manageadd/<int:addid>/',views.manageadd, name="manageadd"),
     path('orders/',views.orders, name="orders"),
-    path('order-<int:orderid>/',views.orderdetail, name="orderdetail")
+    path('order-<int:orderid>/',views.orderdetail, name="order_detail")
     
 ]
 #urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
