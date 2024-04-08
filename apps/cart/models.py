@@ -29,8 +29,6 @@ class Category(models.Model):
 
 class Product(models.Model):
     title = models.CharField(max_length=200)
-    gender_cat = models.CharField(max_length=50,null=True)
-    sub_cat = models.CharField(max_length=50,null=True)
     article_type = models.CharField(max_length=50,null=True)
     market_price = models.PositiveIntegerField()
     discount_price = models.PositiveIntegerField(default=0)
@@ -41,7 +39,6 @@ class Product(models.Model):
     color = models.CharField(max_length=200,null=True)
     size = models.CharField(max_length=5,default="S")
     material = models.CharField(max_length=200,null=True)
-    completelook = models.TextField(null=True)
     
     def __str__(self):
         return self.title
