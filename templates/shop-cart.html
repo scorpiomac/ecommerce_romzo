@@ -1,4 +1,8 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %}
+{% load static %}
+{% load math_filters %}
+
+{% block content %}
 <!-- Page Title-->
 <div class="page-title-overlap bg-dark pt-4">
     <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
@@ -6,8 +10,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
                     <li class="breadcrumb-item"><a class="text-nowrap" href="{% url 'apps.main:index' %}"><i class="ci-home"></i>Home</a></li>
-                    <li class="breadcrumb-item text-nowrap"><a href="{% url 'apps.main:showallproducts' %}">Shop</a>
-                    </li>
+                    <li class="breadcrumb-item text-nowrap"><a href="{% url 'apps.main:showallproducts' %}">Shop</a></li>
                     <li class="breadcrumb-item text-nowrap active" aria-current="page">Panier</li>
                 </ol>
             </nav>
@@ -22,84 +25,98 @@
         <!-- List of items-->
         <section class="col-lg-8">
             <div class="d-flex justify-content-between align-items-center pt-3 pb-4 pb-sm-5 mt-1">
-                <h2 class="h6 text-light mb-0">Produits</h2><a class="btn btn-outline-primary btn-sm ps-2" href="{% url 'apps.main:showallproducts' %}"><i class="ci-arrow-left me-2"></i>Poursuivre les achats</a>
+                <h2 class="h6 text-light mb-0">Produits</h2>
+                <a class="btn btn-outline-primary btn-sm ps-2" href="{% url 'apps.main:showallproducts' %}">
+                    <i class="ci-arrow-left me-2"></i>Poursuivre les achats
+                </a>
             </div>
-            <!-- Item-->
 
-            {% for cp in cartproducts %}
-            <div class="d-sm-flex justify-content-between align-items-center my-2 pb-3 border-bottom">
-                <div class="d-block d-sm-flex align-items-center text-center text-sm-start">
-
-                    <a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="{% url 'apps.main:single_product' cp.product.id %}"> 
-                    {% if cp.product.productimagesfiles_set.all %}
-                      {% for product_img in cp.product.productimagesfiles_set.all|slice:":1" %}
-                        <img src="{{product_img.image_file.url}}" width="180" alt="Product">
-                      {%endfor%}
-                    {%else%}
-                      {% for product_img in cp.product.productimagesurl_set.all|slice:":1" %}
-                        <img src="{{product_img.image_url}}" width="180" alt="Product">
-                      {%endfor%}
-                    {% endif %}
-                    </a>
-                    <div class="pt-2">
-                        <h3 class="product-title fs-base mb-2"><a href="{% url 'apps.main:single_product' cp.product.id %}">{{cp.product.title}}</a></h3>
-                        <div class="fs-sm"><span class="text-muted me-2">Taille:</span>8.5</div>
-                        <div class="fs-sm"><span class="text-muted me-2">Couleur:</span>Blanc &amp; Bleu</div>
-                        <div class="fs-lg text-accent pt-2">${{cp.rate}}</div>
+            {% if cart_items %}
+                {% for cp in cart_items %}
+                <div class="d-sm-flex justify-content-between align-items-center my-2 pb-3 border-bottom">
+                    <div class="d-block d-sm-flex align-items-center text-center text-sm-start">
+                        <a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="{% url 'apps.main:single_product' cp.product.id %}">
+                            {% if cp.product.productimagesfiles_set.all %}
+                                {% for product_img in cp.product.productimagesfiles_set.all|slice:":1" %}
+                                    <img src="{{ product_img.image_file.url }}" width="180" alt="{{ cp.product.title }}">
+                                {% endfor %}
+                            {% else %}
+                            {% for product_img in product.productimagesurl_set.all|slice:":1" %}
+                            <img src="{{product_img.image_url}}" alt="Product">
+                          {%endfor%}                            {% endif %}
+                        </a>
+                        <div class="pt-2">
+                            <h3 class="product-title fs-base mb-2">
+                                <a href="{% url 'apps.main:single_product' cp.product.id %}">{{ cp.product.title }}</a>
+                            </h3>
+                            <div class="fs-sm"><span class="text-muted me-2">Prix unitaire:</span>${{ cp.product.market_price }}</div>
+                            <div class="fs-lg text-accent pt-2" >Total: ${{ cp.quantity|multiply:cp.product.market_price }}</div>
+                        </div>
+                    </div>
+                    <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
+                        <label class="form-label" for="quantity{{ forloop.counter }}">Quantité</label>
+                        <input class="form-control" type="number" id="quantity{{ forloop.counter }}" min="1" value="{{ cp.quantity }}" onchange="updateCartItem({{ cp.product.id }}, this.value)">
+                        {% comment %} <a href="{% url 'apps.cart:managecart' cp.id %}?action=inc">
+                            <button class="btn btn-link px-0 text-success" type="button"><i class="ci-add-circle me-2"></i>Ajouter</button>
+                        </a>
+                        <a href="{% url 'apps.cart:managecart' cp.id %}?action=dcr">
+                            <button class="btn btn-link px-0 text-danger" type="button"><i class="ci-close-circle me-2"></i>Diminuer</button>
+                        </a> {% endcomment %}
                     </div>
                 </div>
-                <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
-                    <label class="form-label" for="quantity1">Quantité </label>
-                    <input class="form-control" type="number" id="quantity1" min="1" value="{{cp.quantity}}">
-                    <a href="{% url 'apps.cart:managecart' cp.id %}?action=inc">
-                        <button class="btn btn-link px-0 text-success" type="button"><i class="ci-add-circle me-2"></i><span class="fs-sm">Ajouter</span></button></a>
-                    <a href="{% url 'apps.cart:managecart' cp.id %}?action=dcr">
-                        <button class="btn btn-link px-0 text-danger" type="button"><i class="ci-close-circle me-2"></i><span class="fs-sm">Diminuer</span></button></a>
-                </div>
-            </div>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                <p>Votre panier est vide.</p>
+            {% endif %}
+
+            <button href="#" class="btn btn-primary btn-lg d-block w-100 mb-2" onclick="refreshPage()">
+                Mettre à jour le panier
+            </button>
             
-            <a href="{% url 'apps.cart:emptycart'%}"><button class="btn btn-outline-accent d-block w-100 mt-4" type="button"><i class="ci-loading fs-base me-2"></i>Vider le panier</button></a>
-
-
+            <button class="btn btn-outline-accent d-block w-100 mt-4" type="button" onclick="emptyCart()">
+                <i class="ci-loading fs-base me-2"></i>Vider le panier
+            </button>
         </section>
-        <!-- Sidebar-->
+        <!-- Sidebar for order summary-->
         <aside class="col-lg-4 pt-4 pt-lg-0 ps-xl-5">
             <div class="bg-white rounded-3 shadow-lg p-4">
                 <div class="py-2 px-xl-2">
-                    
-                    <div class="py-2 px-xl-2">
-                        <div class="widget mb-3">
-                            <h2 class="widget-title text-center">Résumé de la commande</h2>
-                            {% for cp in cartproducts %}
-                            <div class="d-flex pb-2 border-bottom">
-                                <div class="ps-2">
-                                    <h6 class="widget-product-title"><a href="{% url 'apps.main:single_product' cp.product.id %}">{{cp.product.title}}</a></h6>
-                                    <div class="widget-product-meta"><span class="text-accent me-2">${{cp.rate}}</span><span class="text-muted">x {{cp.quantity}}</span></div>
-                                </div>
-                                <div class="ms-auto">
-                                    <h6 class="fw-normal text-center">${{cp.subtotal}}</h6>
-                                </div>
+                    <div class="widget mb-3">
+                        <h2 class="widget-title text-center">Résumé de la commande</h2>
+                        {% if cart_items %}
+                        {% for cp in cart_items %}
+                        <div class="d-flex pb-2 border-bottom">
+                            <div class="ps-2">
+                                <h6 class="widget-product-title"><a href="{% url 'apps.main:single_product' cp.product.id %}">{{ cp.product.title }}</a></h6>
+                                <div class="widget-product-meta"><span class="text-accent me-2">$ {{ cp.product.market_price }}</span><span class="text-muted">x {{ cp.quantity }}</span></div>
                             </div>
-                            {% endfor %}
+                            <div class="ms-auto">
+                                <h6 class="fw-normal text-center" >$ {{ cp.product.market_price|multiply:cp.quantity }}</h6>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+                        {% else %}
+                        <p>Aucun produit dans le panier.</p>
+                        {% endif %}
                         </div>
                         <ul class="list-unstyled fs-sm pb-2 border-bottom">
-                            <li class="d-flex justify-content-between align-items-center"><span class="me-2">Sous-Total:</span><span class="text-end">${{cart.total}}</span></li>
-                            <li class="d-flex justify-content-between align-items-center"><span class="me-2">Expédition:</span><span class="text-end">—</span></li>
-                            <li class="d-flex justify-content-between align-items-center"><span class="me-2">Taxes:</span><span class="text-end">—</span></li>
-                            <li class="d-flex justify-content-between align-items-center"><span class="me-2">Remise:</span><span class="text-end">—</span></li>
+                        <li class="d-flex justify-content-between align-items-center"><span class="me-2">Sous-Total:</span><span class="text-end" >$ {{ cart.total }}</span></li>
+                        <li class="d-flex justify-content-between align-items-center"><span class="me-2">Expédition:</span><span class="text-end">—</span></li>
+                        <li class="d-flex justify-content-between align-items-center"><span class="me-2">Taxes:</span><span class="text-end">—</span></li>
+                        <li class="d-flex justify-content-between align-items-center"><span class="me-2">Remise:</span><span class="text-end">—</span></li>
                         </ul>
-                        
-
-                    </div>
-                    <div class="text-center mb-4 pb-3 border-bottom">
+                        <div class="text-center mb-4 pb-3 border-bottom">
                         <h2 class="h6 mb-3 pb-1">Total</h2>
-                        <h3 class="fw-normal">${{cart.total}}</h3>
-                    </div>
-                    <a class="btn btn-primary btn-shadow d-block w-100 mt-4" href="{% url 'apps.cart:checkoutdetails' %}"><i class="ci-card fs-lg me-2"></i>Passer à la caisse</a>
-                </div>
-            </div>
-        </aside>
-    </div>
-</div>
-{% endblock %}
+                        <h3 class="fw-normal">${{ cart.total }}</h3>
+                        </div>
+                        <a href="{% url 'apps.cart:checkout' %}" class="btn btn-primary btn-shadow d-block w-100 mt-4">
+                            <i class="ci-card fs-lg me-2"></i>Passer à la caisse
+                        </a>
+                        </button>
+                        </div>
+                        </div>
+                        </aside>
+                        </div>
+                        </div>
+                        {% endblock %}

@@ -6,14 +6,7 @@ from django.contrib.auth.models import User
 from django.core.files import File
 import os
 import urllib.request
-# Create your models here.
 
-# class Category(models.Model):
-#     title = models.CharField(max_length=200)
-#     slug = models.SlugField(unique=True)
-
-#     def __str__(self):
-#         return self.title
 
 
 class Category(models.Model):
@@ -38,6 +31,7 @@ class Product(models.Model):
     color = models.CharField(max_length=200,null=True)
     size = models.CharField(max_length=5,default="S")
     material = models.CharField(max_length=200,null=True)
+    stock_forecast = models.FloatField(null=True, blank=True)
     
     def __str__(self):
         return self.title
@@ -60,58 +54,6 @@ class ProductRecommendation(models.Model):
     def __str__(self):
         return f"Recommandations pour {self.product.name}"
 
-# class Cart (models.Model):
-#     profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
-#     total = models.PositiveIntegerField(default=0)
-#     ordered = models.BooleanField(default=False)
-#     created_at = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return "Cart: " + str(self.id)
-
-# class CartProduct(models.Model):
-#     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-#     product = models.ForeignKey(Product, on_delete=models.CASCADE,)
-#     rate = models.PositiveIntegerField()
-#     quantity = models.PositiveIntegerField()
-#     subtotal = models.PositiveIntegerField()
-
-#     def __str__(self):
-#         return "Cart: " + str(self.cart.id) + "  CartProduct: " + str(self.id)
-
-# ORDER_STATUS = (
-#     ("Order Placed","Order Placed"),
-#     ("Order Processing","Order Processing"),
-#     ("Order Completed","Order Completed"),
-#     ("Order Canceled","Order Canceled"),
-#     ("On the way","On the way")
-# )
-    
-# class Sales(models.Model):
-#         #company = models.ForeignKey(CompanyDetails, on_delete=models.CASCADE)
-#         product = models.ForeignKey(Product, on_delete=models.CASCADE)
-#         rate = models.PositiveIntegerField(default=0)
-#         quantity = models.PositiveIntegerField(default=0)
-#         subtotal = models.PositiveIntegerField(default=0)
-
-#         def __str__(self):
-#             return "Product: " + str(self.product) + " Sales: " + str(self.subtotal)
-
-# class Order(models.Model):
-#     cart = models.OneToOneField(Cart, on_delete=models.CASCADE)
-#     ordered_by =models.CharField(max_length=200)
-#     shipping_address =models.CharField(max_length=200)
-    
-#     mob_no = models.CharField(max_length=12, null=True, blank=True)
-#     email = models.EmailField(blank=True)
-#     subtotal =models.PositiveIntegerField(null=True, blank=True)
-#     discount =models.PositiveIntegerField(null=True, blank=True)
-#     total =models.PositiveIntegerField(null=True, blank=True)
-#     order_status = models.CharField(max_length=50, choices=ORDER_STATUS)
-#     created_at = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return "Order: " + str(self.id)
     
 
 from django.db import models
@@ -138,6 +80,11 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Commande #{self.id} par {self.profile.user.username}"
+    
+    def get_total(self):
+        total = sum(item.get_total() for item in self.items.all())
+        return total
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
@@ -146,3 +93,6 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} x {self.product.title}"
+    
+    def get_total(self):
+        return self.quantity * (self.product.market_price - self.product.discount_price)

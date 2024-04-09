@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
@@ -222,10 +222,10 @@ def manageadd(request, addid):
 
 @login_required
 def orders(request):
-    profile = Profile.objects.get(id=request.user.profile.id)
-    orders = Order.objects.filter(cart__profile=profile).order_by("-id")
-    
-    return render(request, 'account-orders.html', {'orders': orders,'profile':profile})
+    profile = request.user.profile
+    orders = Order.objects.filter(profile=profile).order_by('-created_at')  # Assurez-vous que l'ordre est correct selon vos préférences
+
+    return render(request, 'account-orders.html', {'orders': orders})
 
 
 
@@ -233,10 +233,14 @@ def orders(request):
 def orderdetail(request, orderid):
     profile= Profile.objects.get(user=request.user)
     if request.user.is_authenticated and Profile.objects.filter(user=request.user).exists():
-            order_id = orderid
-            order = Order.objects.get(id=order_id)
-            if request.user.profile != order.cart.profile:
-                return redirect("apps.accounts:orders")
+        order = get_object_or_404(Order, id=orderid, profile=request.user.profile)
+        items = OrderItem.objects.filter(order=order)
+        subtotal = sum(item.get_total() for item in items)  # Calcul du sous-total de la commande
+        return render(request, 'account-order-detail.html', {
+            'order': order,
+            'items': items,
+            'subtotal': subtotal
+        })
     else:
         return redirect("apps.accounts:signin")
-    return render(request, 'account-order-detail.html', {'order':order,'profile':profile})
+    

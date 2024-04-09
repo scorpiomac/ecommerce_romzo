@@ -1,14 +1,15 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
-<!-- Page Title-->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Titre de la Page -->
 <div class="page-title-overlap bg-dark pt-4">
     <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
         <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
-                    <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>Accueil</a>
-                    </li>
-                    <li class="breadcrumb-item text-nowrap"><a href="{% url 'apps.main:showallproducts' %}">Boutique</a>
-                    </li>
+                    <li class="breadcrumb-item"><a class="text-nowrap" href="{% url 'apps.main:index' %}"><i class="ci-home"></i>Accueil</a></li>
+                    <li class="breadcrumb-item text-nowrap"><a href="{% url 'apps.main:showallproducts' %}">Boutique</a></li>
                     <li class="breadcrumb-item text-nowrap active" aria-current="page">Payer</li>
                 </ol>
             </nav>
@@ -18,180 +19,86 @@
         </div>
     </div>
 </div>
+
 <div class="container pb-5 mb-2 mb-md-4">
-     <form method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
-                {% csrf_token %}
-    <div class="row">
-        <section class="col-lg-8">
-            <!-- Steps-->
-            <div class="steps steps-light pt-2 pb-3 mb-5">
-                <a class="step-item active" href="{% url 'apps.cart:mycart' %}">
-                    <div class="step-progress"><span class="step-count">1</span></div>
-                    <div class="step-label"><i class="ci-cart"></i>Panier</div>
-                </a>
-                <a class="step-item active current" href="checkout-details.html">
-                    <div class="step-progress"><span class="step-count">2</span></div>
-                    <div class="step-label"><i class="ci-user-circle"></i>Détails</div>
-                </a>
-
-                <a class="step-item" href="checkout-payment.html">
-                    <div class="step-progress"><span class="step-count">3</span></div>
-                    <div class="step-label"><i class="ci-card"></i>Paiement</div>
-                </a>
-
-            </div>
-            <!-- Autor info-->
-            <div class="d-sm-flex justify-content-between align-items-center bg-secondary p-4 rounded-3 mb-grid-gutter">
-                <div class="d-flex align-items-center">
-                    <div class="img-thumbnail rounded-circle position-relative flex-shrink-0"><img class="rounded-circle" src="{{user.profile.image.url}}" width="90" alt="Susan Gardner">
-                    </div>
-                    <div class="ps-3">
-                        <h3 class="fs-base mb-0">{{user.first_name}} {{user.last_name}}</h3><span class="text-accent fs-sm">{{user.email}}</span>
-                    </div>
-                </div><a class="btn btn-light btn-sm btn-shadow mt-3 mt-sm-0" href="{% url 'apps.accounts:profile' %}"><i class="ci-edit me-2"></i>Editer le profil</a>
-            </div>
-            <!-- Shipping address-->
-            <h2 class="h6 pt-1 pb-3 mb-3 ">Adresse de livraison</h2>
-           
-
-                <div class="list-group">
-                    <label class="list-group-item">
-                        <input class="form-check-input me-2" type="radio" name="address" checked value="old">
-                        <strong>{{user.first_name}} {{user.last_name}}</strong>
-                        <span Class="mx-3"></span>
-                        <span Class="mx-3">{{profile.mob_no}}</span>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">{{user.email}}</li>
-                            <li class="list-group-item"><strong>Adresse:</strong>
-                                {{address.addline}}, {{address.city}}, {{address.state}} - {{address.pincode}}
-                            </li>
-
-                        </ul>
-                    </label>
-                    <label class="list-group-item border-top my-3">
-                        <input class="form-check-input me-2" type="radio" name="address" value="new">
-                        <span class="">Entrez une nouvelle adresse</span>
-
-
-                        <div class="row mt-3">
-                            <div class="col-sm-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="account-fn">Prénom</label>
-                    <input class="form-control" type="text" id="account-fn" name="firstname" value="">
+    <form method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <div class="row">
+            <!-- Panier et Détails de l'utilisateur -->
+            <section class="col-lg-8">
+                <!-- Etapes de navigation -->
+                <div class="steps steps-light pt-2 pb-3 mb-5">
+                    <a class="step-item active" href="{% url 'apps.cart:mycart' %}">
+                        <div class="step-progress"><span class="step-count">1</span></div>
+                        <div class="step-label"><i class="ci-cart"></i>Panier</div>
+                    </a>
+                    <a class="step-item active current">
+                        <div class="step-progress"><span class="step-count">2</span></div>
+                        <div class="step-label"><i class="ci-user-circle"></i>Détails</div>
+                    </a>
+                    <a class="step-item">
+                        <div class="step-progress"><span class="step-count">3</span></div>
+                        <div class="step-label"><i class="ci-card"></i>Paiement</div>
+                    </a>
                 </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="mb-3">
-            <label class="form-label" for="account-ln">Nom de famille</label>
-            <input class="form-control" type="text" id="account-ln" name="lastname" value="">
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-6">
-        <div class="mb-3">
-            <label class="form-label" for="account-email">Adresse e-mail</label>
-            <input class="form-control" type="email" id="account-email" name="emailadd" value="">
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="mb-3">
-            <label class="form-label" for="account-phone">Numéro de téléphone</label>
-            <input class="form-control" type="text" id="account-phone" name="phoneno" value="">
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-6">
-        <div class="mb-3">
-            <label class="form-label" for="checkout-address-1">Adresse</label>
-            <input class="form-control" type="text" name="addline" value="" id="checkout-address-1">
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="mb-3">
-            <label class="form-label" for="checkout-zip">Ville</label>
-            <input class="form-control" type="text" name="city" value="" id="checkout-zip">
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-6">
-        <div class="mb-3">
-            <label class="form-label" for="checkout-address-1">État</label>
-            <input class="form-control" type="text" name="state" value="" id="checkout-address-1">
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="mb-3">
-            <label class="form-label" for="checkout-zip">Code postal</label>
-            <input class="form-control" type="text" name="zipcode" value="" id="checkout-zip">
-        </div>
-    </div>
-</div>
-
-
-
-</label>
-</div>
-</section>
-<!-- Sidebar-->
-<aside class="col-lg-4 pt-4 pt-lg-0 ps-xl-5">
-    <div class="bg-white rounded-3 shadow-lg p-4">
-        <div class="py-2 px-xl-2">
-
-            <div class="py-2 px-xl-2">
-                <div class="widget mb-3">
+                <!-- Information de l'utilisateur -->
+                <div class="bg-secondary p-4 rounded-3 mb-4">
+                    <div class="d-flex align-items-center">
+                        <img class="rounded-circle" src="{{ user.profile.image.url }}" width="90" alt="{{ user.get_full_name }}">
+                        <div class="ps-3">
+                            <h3 class="fs-base mb-0">{{ user.first_name }} {{ user.last_name }}</h3>
+                            <span class="text-accent fs-sm">{{ user.email }}</span>
+                        </div>
+                    </div>
+                    <a class="btn btn-light btn-sm btn-shadow mt-3" href="{% url 'apps.accounts:profile' %}"><i class="ci-edit me-2"></i>Editer le profil</a>
+                </div>
+                <!-- Adresse de livraison -->
+                <h2 class="h6 pt-1 pb-3 mb-3 border-bottom">Adresse de livraison</h2>
+                {% for address in addresses %}
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="address" id="address{{ forloop.counter }}" value="{{ address.id }}" {% if forloop.first %}checked{% endif %}>
+                    <label class="form-check-label" for="address{{ forloop.counter }}">
+                        {{ address.addline }}, {{ address.city }}, {{ address.state }} - {{ address.pincode }}
+                    </label>
+                </div>
+                {% empty %}
+                <p>Aucune adresse enregistrée. <a href="{% url 'add_address' %}">Ajouter une adresse</a></p>
+                {% endfor %}
+            </section>
+            <!-- Récapitulatif de la commande -->
+            <aside class="col-lg-4 pt-4 pt-lg-0">
+                <div class="bg-white rounded-3 shadow-lg p-4">
                     <h2 class="widget-title text-center">Récapitulatif de la commande</h2>
-                    {% for cp in cartproducts %}
-                    <div class="d-flex pb-2 border-bottom">
-                        <div class="ps-2">
-                            <h6 class="widget-product-title"><a href="{% url 'apps.main:single_product' cp.product.id %}">{{cp.product.title}}</a>
-                            </h6>
-                            <div class="widget-product-meta"><span class="text-accent me-2">${{cp.rate}}</span><span class="text-muted">x
-                                            {{cp.quantity}}</span></div>
-                        </div>
-                        <div class="ms-auto">
-                            <h6 class="fw-normal text-center">${{cp.subtotal}}</h6>
-                        </div>
+                    {% for item in cart_items %}
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="widget-product-title"><a href="{% url 'apps.main:single_product' item.product.id %}">{{ item.product.title }}</a></h6>
+                        <span class="widget-product-meta">$ {{ item.product.discount_price|default:item.product.market_price }} x {{ item.quantity }}</span>
                     </div>
                     {% endfor %}
+                    <ul class="list-unstyled fs-sm">
+                        <li class="d-flex justify-content-between align-items-center"><span>Total:</span><span>${{ total }}</span></li>
+                    </ul>
+                    <form action="{% url 'apps.cart:payer' %}" method="post" id="payment-form">
+                        {% csrf_token %}
+                        <div class="payment-methods">
+                            <div class="payment-option" data-value="paypal">
+                                <img src="https://www.paypalobjects.com/digitalassets/c/website/logo/full-text/pp_fc_hl.svg" alt="PayPal">
+                                <span class="checkmark">&#10003;</span>
+                            </div>
+                            <br>
+                            <div class="payment-option" data-value="stripe">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png" alt="Stripe">
+                                <span class="checkmark">&#10003;</span>
+                            </div>
+                            <input type="hidden" name="payment_method" id="payment_method">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-shadow d-block w-100 mt-4" type="submit"><i class="ci-card fs-lg me-2"></i>Procéder au paiement</button>
+                    </form>
+                    
+                    
                 </div>
-                <ul class="list-unstyled fs-sm pb-2 border-bottom">
-                    <li class="d-flex justify-content-between align-items-center"><span class="me-2">Sous-total:</span><span class="text-end">${{cart.total}}</span></li>
-                    <li class="d-flex justify-content-between align-items-center"><span class="me-2">Livraison:</span><span class="text-end">—</span></li>
-                    <li class="d-flex justify-content-between align-items-center"><span class="me-2">Taxes:</span><span class="text-end">—</span></li>
-                    <li class="d-flex justify-content-between align-items-center"><span class="me-2">Remise:</span><span class="text-end">—</span></li>
-                </ul>
-
-
-            </div>
-            <div class="text-center mb-4 pb-3 border-bottom">
-                <h2 class="h6 mb-3 pb-1">Total</h2>
-                <h3 class="fw-normal">${{cart.total}}</h3>
-            </div>
-
-            <a class="btn btn-shadow d-block w-100 mt-4" href="{% url 'apps.cart:checkoutdetails' %}">
-                <button class="btn btn-primary" type="submit"><i class="ci-card fs-lg me-2"></i>Passer à la caisse</button></a>
+            </aside>
         </div>
-
-    </div>
-</aside>
+    </form>
 </div>
-</form>
-<!-- Navigation (mobile)-->
-<div class="row d-lg-none">
-    <div class="col-lg-8">
-        <div class="d-flex pt-4 mt-3">
-            <div class="w-50 pe-3"><a class="btn btn-secondary d-block w-100" href="shop-cart.html"><i
-                            class="ci-arrow-left mt-sm-0 me-1"></i><span class="d-none d-sm-inline">Retour au
-                            Panier</span><span class="d-inline d-sm-none">Retour</span></a></div>
-            <div class="w-50 ps-2"><a class="btn btn-primary d-block w-100" href="checkout-shipping.html"><span
-                            class="d-none d-sm-inline">Procéder à l'expédition</span><span
-                            class="d-inline d-sm-none">Suivant</span><i class="ci-arrow-right mt-sm-0 ms-1"></i></a>
-            </div>
-        </div>
-    </div>
-</div>
-</div>{% endblock %}
+{% endblock %}
